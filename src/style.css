@@ -144,11 +144,12 @@ img {
   top: 0;
   left: 0;
   width: 100%;
-  background: var(--color-white);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   z-index: 1000;
-  box-shadow: 0 2px 20px rgba(0, 0, 0, .08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   transition: var(--transition);
-  /* Needed so mobile dropdown positions relative to header */
   isolation: isolate;
 }
 
@@ -374,25 +375,41 @@ img {
 
 /* ── Hero ── */
 .hero {
-  padding: 100px 0 80px;
-  background: linear-gradient(135deg, #eef3ff 0%, #f5f0ff 40%, #fff9f0 100%);
-  min-height: 88vh;
+  padding: 140px 0 120px;
+  background: linear-gradient(135deg, #012a5a 0%, #001228 100%);
+  min-height: 85vh;
   display: flex;
   align-items: center;
   position: relative;
   overflow: hidden;
+  color: var(--color-white);
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 120px;
+  background: linear-gradient(to bottom, transparent, #001228);
+  pointer-events: none;
+  z-index: 3;
 }
 
 .hero::before {
   content: '';
   position: absolute;
   top: 0;
-  right: 0;
-  width: 55%;
+  right: -5%;
+  width: 60%;
   height: 100%;
-  background: linear-gradient(135deg, rgba(1, 53, 115, .04) 0%, rgba(255, 136, 0, .05) 100%);
-  clip-path: polygon(10% 0%, 100% 0%, 100% 100%, 0% 100%);
+  background: url('/assets/cta-bg.png') center/cover no-repeat;
+  opacity: 0.15;
+  mask-image: linear-gradient(to left, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+  -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
   pointer-events: none;
+  z-index: 1;
 }
 
 .hero-content {
@@ -422,11 +439,12 @@ img {
 }
 
 .hero-headline {
-  font-size: 2.8rem;
+  font-size: 3.2rem;
   line-height: 1.1;
-  margin-bottom: 1.25rem;
-  color: var(--color-brand-blue);
+  margin-bottom: 1.5rem;
+  color: var(--color-white);
   font-weight: 800;
+  letter-spacing: -1px;
 }
 
 @media (min-width: 768px) {
@@ -451,10 +469,10 @@ img {
 }
 
 .hero-subtext {
-  font-size: 1.1rem;
-  color: var(--color-gray-600);
-  margin-bottom: 2rem;
-  max-width: 540px;
+  font-size: 1.15rem;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 2.5rem;
+  max-width: 580px;
   line-height: 1.8;
 }
 
@@ -468,29 +486,33 @@ img {
 .hero-badges {
   display: flex;
   flex-wrap: wrap;
-  gap: 1.5rem;
+  gap: 1rem;
+  margin-top: 1rem;
 }
 
 .badge-item {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 0.85rem;
-  color: var(--color-brand-blue);
+  color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 0.35rem 0.75rem;
+  border-radius: 4px;
 }
 
 .badge-icon {
-  width: 22px;
-  height: 22px;
+  width: 18px;
+  height: 18px;
   background: var(--color-brand-green);
   color: var(--color-white);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.65rem;
-  font-weight: 900;
+  font-size: 0.6rem;
+  flex-shrink: 0;
 }
 
 .hero-image-wrapper {
@@ -499,9 +521,24 @@ img {
 
 .hero-img-main {
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
   width: 100%;
   object-fit: cover;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-img-backdrop {
+  position: absolute;
+  top: -10%;
+  right: -10%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--color-brand-orange) 0%, var(--color-brand-green) 100%);
+  border-radius: var(--radius-lg);
+  z-index: 1;
+  opacity: 0.15;
+  filter: blur(40px);
 }
 
 .hero-image-placeholder {
@@ -535,8 +572,9 @@ img {
 
 /* ── Download Banner ── */
 .download-banner {
-  background: var(--color-accent);
-  padding: 1rem 0;
+  background: #001228;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .download-banner-inner {
@@ -550,12 +588,15 @@ img {
 .download-banner-text {
   font-weight: 700;
   font-size: 1rem;
-  color: var(--color-primary);
+  color: var(--color-white);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 }
 
 .download-banner-text span {
   font-weight: 400;
-  opacity: .8;
+  opacity: .75;
 }
 
 /* ── Section Padding ── */
@@ -573,16 +614,21 @@ img {
   font-size: 2.2rem;
   margin-bottom: 1rem;
   color: var(--color-brand-blue);
+  font-weight: 800;
 }
 
 @media (min-width: 768px) {
   .section-title {
-    font-size: 2.7rem;
+    font-size: 2.6rem;
   }
 }
 
+.text-white .section-title {
+  color: var(--color-white);
+}
+
 .section-subtitle {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 800;
   letter-spacing: 2.5px;
   text-transform: uppercase;
@@ -594,55 +640,115 @@ img {
   margin-bottom: 0.75rem;
 }
 
-/* ── Service Cards ── */
+/* ── Service Cards Modernized ── */
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2.5rem;
 }
 
 .service-card {
   background: var(--color-white);
-  padding: 2rem;
+  padding: 3rem 2.5rem;
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 10px 30px rgba(0, 53, 115, 0.03);
   transition: var(--transition);
-  border: 1px solid var(--color-gray-100);
-  border-bottom: 4px solid transparent;
+  border: 1px solid rgba(1, 53, 115, 0.05);
   display: flex;
   flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.service-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: var(--color-brand-blue);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.service-card:nth-child(2n)::before {
+  background: var(--color-brand-orange);
+}
+
+.service-card:nth-child(3n)::before {
+  background: var(--color-brand-green);
 }
 
 .service-card:hover {
-  transform: translateY(-8px);
-  box-shadow: var(--shadow-lg);
-  border-bottom-color: var(--color-accent);
+  transform: translateY(-12px);
+  box-shadow: 0 20px 40px rgba(1, 53, 115, 0.08);
+  border-color: rgba(1, 53, 115, 0.1);
+}
+
+.service-card:hover::before {
+  transform: scaleX(1);
 }
 
 .service-icon {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  background: linear-gradient(135deg, #eef3ff, #e8f5e0);
-  width: 64px;
-  height: 64px;
-  border-radius: 12px;
+  margin-bottom: 2rem;
+  width: 70px;
+  height: 70px;
+  border-radius: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: var(--color-gray-50);
   color: var(--color-brand-blue);
+  transition: var(--transition);
+  position: relative;
+}
+
+.service-card:hover .service-icon {
+  background: var(--color-brand-blue);
+  color: var(--color-white);
+}
+
+.service-card:nth-child(2n):hover .service-icon {
+  background: var(--color-brand-orange);
+}
+
+.service-card:nth-child(3n):hover .service-icon {
+  background: var(--color-brand-green);
 }
 
 .service-card h3 {
-  font-size: 1.05rem;
-  margin-bottom: 0.5rem;
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
   color: var(--color-brand-blue);
+  font-weight: 700;
+  transition: var(--transition);
 }
 
 .service-card p {
-  font-size: 0.9rem;
+  font-size: 0.98rem;
   color: var(--color-gray-600);
+  line-height: 1.7;
   flex: 1;
-  margin-bottom: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.service-card .btn-text {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 800;
+  color: var(--color-brand-blue);
+}
+
+.service-card:nth-child(2n) .btn-text {
+  color: var(--color-brand-orange);
+}
+
+.service-card:nth-child(3n) .btn-text {
+  color: var(--color-brand-green);
 }
 
 /* ── Service Detail (services.html) ── */
@@ -749,41 +855,96 @@ img {
   transform: scale(1.1);
 }
 
-/* ── Industries ── */
-.industries-grid {
+/* ── Industries (Modern) ── */
+.industries-modern-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
 }
 
-.industry-tile {
-  text-align: center;
-  padding: 2rem 1rem;
-  background: var(--color-brand-blue);
-  color: var(--color-white);
-  border-radius: var(--radius-md);
+.industry-modern-card {
+  background: var(--color-white);
+  border: 1px solid rgba(1, 53, 115, 0.06);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem 2rem;
+  position: relative;
+  overflow: hidden;
   transition: var(--transition);
-  cursor: default;
+  box-shadow: 0 4px 20px rgba(1, 53, 115, 0.04);
 }
 
-.industry-tile:hover {
-  background: var(--color-accent);
-  color: var(--color-white);
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-md);
+.industry-modern-card::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--color-brand-blue);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
 }
 
-.industry-icon {
-  margin-bottom: 1.25rem;
+.industry-modern-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(1, 53, 115, 0.1);
+  border-color: rgba(1, 53, 115, 0.12);
+}
+
+.industry-modern-card:hover::before {
+  transform: scaleX(1);
+}
+
+.industry-modern-num {
+  font-family: var(--font-heading);
+  font-size: 3rem;
+  font-weight: 900;
+  color: rgba(1, 53, 115, 0.06);
+  line-height: 1;
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+  letter-spacing: -2px;
+  user-select: none;
+  transition: var(--transition);
+}
+
+.industry-modern-card:hover .industry-modern-num {
+  color: rgba(255, 136, 0, 0.12);
+}
+
+.industry-modern-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #eef3ff 0%, #f0f9ff 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: inherit;
+  color: var(--color-brand-blue);
+  margin-bottom: 1.5rem;
   transition: var(--transition);
 }
 
-.industry-icon svg {
-  stroke-width: 1.5px;
+.industry-modern-card:hover .industry-modern-icon {
+  background: var(--color-brand-blue);
+  color: var(--color-white);
+}
+
+.industry-modern-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-brand-blue);
+  margin-bottom: 0.6rem;
+  line-height: 1.3;
+}
+
+.industry-modern-desc {
+  font-size: 0.87rem;
+  color: var(--color-gray-600);
+  line-height: 1.65;
+  margin: 0;
 }
 
 /* ── Clients ── */
@@ -819,8 +980,9 @@ img {
 
 /* ── Stats Bar ── */
 .stats-bar {
-  background: var(--color-primary);
+  background: #001228;
   padding: 3rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .stats-grid {
@@ -918,7 +1080,7 @@ img {
   margin-top: 0.5rem;
 }
 
-/* ── Compliance ── */
+/* ── Compliance Badges ── */
 .compliance-badges {
   display: flex;
   flex-wrap: wrap;
@@ -928,13 +1090,19 @@ img {
 }
 
 .comp-badge {
-  background: var(--color-white);
-  border: 2px solid var(--color-accent);
+  background: var(--color-gray-50);
+  border: 2px solid var(--color-brand-blue);
   color: var(--color-brand-blue);
   padding: 0.65rem 1.5rem;
   border-radius: 30px;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 0.88rem;
+  transition: var(--transition);
+}
+
+.comp-badge:hover {
+  background: var(--color-brand-blue);
+  color: var(--color-white);
 }
 
 /* ── CTA Section ── */
@@ -1133,10 +1301,21 @@ img {
   font-size: 0.82rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  transition: var(--transition);
+}
+
+.footer-brochure svg {
+  stroke: var(--color-white);
+  flex-shrink: 0;
+}
+
+.footer-brochure .ui-icon {
+  color: var(--color-white);
 }
 
 .footer-brochure:hover {
   background: var(--color-accent-dark);
+  transform: translateY(-2px);
 }
 
 /* ── WhatsApp Float ── */
@@ -1216,20 +1395,25 @@ img {
 }
 
 .bg-accent-section {
-  background: var(--color-accent);
+  position: relative;
+  background: linear-gradient(rgba(1, 53, 115, 0.85), rgba(1, 53, 115, 0.85)), url('/assets/cta-bg.png') center/cover no-repeat fixed;
   color: var(--color-white);
+  padding: 8rem 0;
+  /* Enhanced padding for a more premium look */
 }
 
-/* ── Reveal Animation ── */
+/* ── Reveal Animation Optimized ── */
 .reveal {
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+  transform: translateY(20px);
+  transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: opacity, transform;
 }
 
 .reveal.active {
   opacity: 1;
-  transform: none;
+  transform: translateY(0);
 }
 
 /* ── Text / Spacing Utilities ── */
@@ -1413,20 +1597,20 @@ img {
   width: 100%;
 }
 
-/* ── Services footer banner ── */
+/* ── Services CTA banner ── */
 .services-cta-banner {
-  background: var(--color-secondary);
-  padding: 3rem 0;
+  background: var(--color-brand-blue);
+  padding: 3.5rem 0;
   text-align: center;
 }
 
 .services-cta-banner h2 {
-  color: var(--color-primary);
+  color: var(--color-white);
   margin-bottom: .5rem;
 }
 
 .services-cta-banner p {
-  color: rgba(0, 0, 0, .65);
+  color: rgba(255, 255, 255, 0.75);
   margin-bottom: 1.5rem;
 }
 
