@@ -404,7 +404,7 @@ img {
   right: -5%;
   width: 60%;
   height: 100%;
-  background: url('/assets/cta-bg.png') center/cover no-repeat;
+  background: url('assets/cta-bg.png') center/cover no-repeat;
   opacity: 0.15;
   mask-image: linear-gradient(to left, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
   -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
@@ -1396,7 +1396,7 @@ img {
 
 .bg-accent-section {
   position: relative;
-  background: linear-gradient(rgba(1, 53, 115, 0.85), rgba(1, 53, 115, 0.85)), url('/assets/cta-bg.png') center/cover no-repeat fixed;
+  background: linear-gradient(rgba(1, 53, 115, 0.85), rgba(1, 53, 115, 0.85)), url('assets/cta-bg.png') center/cover no-repeat fixed;
   color: var(--color-white);
   padding: 8rem 0;
   /* Enhanced padding for a more premium look */
