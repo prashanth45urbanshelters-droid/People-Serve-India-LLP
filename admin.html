@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog CMS | People Serve India LLP</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --cms-primary: #1a365d;
+            --cms-secondary: #f6931d;
+            --cms-bg: #f8fafc;
+        }
+
+        body {
+            background-color: var(--cms-bg);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        .cms-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        .cms-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--cms-bg);
+        }
+
+        .cms-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 992px) {
+            .cms-grid { grid-template-columns: 1fr; }
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--cms-primary);
+        }
+
+        .form-group input, 
+        .form-group select, 
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--cms-secondary);
+        }
+
+        .form-help {
+            color: #64748b;
+            font-size: 0.82rem;
+            margin-top: 0.35rem;
+        }
+
+        .button-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 640px) {
+            .button-row { grid-template-columns: 1fr; }
+        }
+
+        .btn-cms {
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+
+        .btn-generate {
+            background: var(--cms-primary);
+            color: white;
+            width: 100%;
+        }
+
+        .btn-generate:hover {
+            background: #2d3748;
+        }
+
+        .btn-download {
+            background: var(--cms-secondary);
+            color: white;
+            width: 100%;
+        }
+
+        .btn-download:disabled {
+            background: #cbd5e1;
+            cursor: not-allowed;
+        }
+
+        .cms-status {
+            display: none;
+            margin-top: 1rem;
+            padding: 0.85rem 1rem;
+            border-radius: 6px;
+            background: #ecfdf5;
+            color: #065f46;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .post-manager {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .post-manager h2 {
+            color: var(--cms-primary);
+            font-size: 1.15rem;
+            margin: 0 0 1rem;
+        }
+
+        .post-list {
+            display: grid;
+            gap: 0.75rem;
+            max-height: 360px;
+            overflow-y: auto;
+        }
+
+        .post-row {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 1rem;
+            align-items: center;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 0.85rem;
+            background: #f8fafc;
+        }
+
+        .post-row-title {
+            color: var(--cms-primary);
+            font-weight: 700;
+            line-height: 1.35;
+        }
+
+        .post-row-meta {
+            color: #64748b;
+            font-size: 0.8rem;
+            margin-top: 0.2rem;
+        }
+
+        .btn-danger {
+            background: #dc2626;
+            color: white;
+        }
+
+        .btn-danger:disabled {
+            background: #fca5a5;
+            cursor: not-allowed;
+        }
+
+        .output-box {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.85rem;
+            overflow-x: auto;
+            max-height: 400px;
+            position: relative;
+            margin-top: 1rem;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            cursor: pointer;
+        }
+
+        .copy-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .tab {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            font-weight: 600;
+            color: var(--color-gray-500);
+        }
+
+        .tab.active {
+            border-color: var(--cms-secondary);
+            color: var(--cms-primary);
+        }
+
+        .preview-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            overflow: hidden;
+            background: white;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .instructions {
+            background: #fff3cd;
+            border: 1px solid #ffeeba;
+            color: #856404;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+
+        .step-badge {
+            display: inline-block;
+            background: var(--cms-primary);
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 20px;
+            font-size: 12px;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cms-container">
+        <div class="cms-header">
+            <h1 style="margin:0; font-size: 1.5rem; color: var(--cms-primary);">People Serve India <span style="color: var(--cms-secondary);">Blog CMS</span></h1>
+            <a href="blog.html" class="btn btn-outline">View Blog Page</a>
+        </div>
+
+        <div class="instructions">
+            <strong>How to add a blog:</strong><br>
+            <span class="step-badge">1</span> Fill the form on the left. 
+            <span class="step-badge">2</span> Generate Code. 
+            <span class="step-badge">3</span> Create a new file in <code>blogs/</code> folder with the HTML code.
+            <span class="step-badge">4</span> Update <code>blogs.js</code> with the JS entry.
+        </div>
+
+        <div class="cms-grid">
+            <!-- Form Section -->
+            <div class="cms-form">
+                <div class="form-group">
+                    <label>Blog Title</label>
+                    <input type="text" id="title" placeholder="e.g. The Future of Smart Buildings">
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <select id="category">
+                        <option value="housekeeping">Housekeeping</option>
+                        <option value="manpower">Manpower</option>
+                        <option value="compliance">Compliance</option>
+                        <option value="security">Security</option>
+                        <option value="ifm">Integrated FM</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Image URL (Unsplash or local path)</label>
+                    <input type="text" id="image" placeholder="https://images.unsplash.com/photo-...">
+                    <div class="form-help">Use a public URL, a path like <code>../assets/blog-image.jpg</code>, or upload an image below.</div>
+                </div>
+                <div class="form-group">
+                    <label>Upload Featured Image</label>
+                    <input type="file" id="imageFile" accept="image/png,image/jpeg,image/webp">
+                    <div class="form-help">Static sites cannot save uploads directly. This embeds the image into the generated blog page and manifest.</div>
+                </div>
+                <div class="form-group">
+                    <label>Date</label>
+                    <input type="text" id="date">
+                </div>
+                <div class="form-group">
+                    <label>Read Time</label>
+                    <input type="text" id="readTime" value="5 min read">
+                </div>
+                <div class="form-group">
+                    <label>Excerpt (Short summary for the card)</label>
+                    <textarea id="excerpt" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Blog Content (HTML allowed)</label>
+                    <textarea id="content" rows="10" placeholder="<p>Start writing your blog content here...</p>"></textarea>
+                    <div class="form-help">HTML is supported. Plain text paragraphs are converted automatically.</div>
+                </div>
+                <div class="form-group" style="display: flex; align-items: center; gap: 0.5rem;">
+                    <input type="checkbox" id="featured" style="width: auto;">
+                    <label for="featured" style="margin: 0;">Make this the Featured Post</label>
+                </div>
+                <div class="form-group">
+                    <label>CMS Password</label>
+                    <input type="password" id="cmsPassword" autocomplete="current-password" placeholder="Enter CMS password">
+                    <div class="form-help">Required only for direct PHP publishing.</div>
+                </div>
+                <button class="btn-cms btn-generate" id="generateBtn">Generate Blog Code</button>
+                <div class="button-row">
+                    <button class="btn-cms btn-download" id="publishBtn" disabled>Publish Directly</button>
+                    <button class="btn-cms btn-download" id="downloadHtmlBtn" disabled>Download Blog Page</button>
+                </div>
+                <div class="button-row">
+                    <button class="btn-cms btn-download" id="downloadManifestBtn" disabled>Download Updated blogs.js</button>
+                    <button class="btn-cms btn-download" id="downloadBackupBtn" disabled>Download CMS Backup</button>
+                </div>
+                <div class="button-row">
+                    <button class="btn-cms btn-generate" id="resetBtn" type="button">Clear Draft</button>
+                </div>
+                <div id="cmsStatus" class="cms-status"></div>
+
+                <div class="post-manager">
+                    <h2>Manage Uploaded Blogs</h2>
+                    <div class="form-help" style="margin-bottom: 1rem;">Enter the CMS password above, then delete any published blog from the server.</div>
+                    <div id="postList" class="post-list"></div>
+                </div>
+            </div>
+
+            <!-- Preview & Output Section -->
+            <div class="cms-output">
+                <div class="tabs">
+                    <div class="tab active" data-tab="preview">Preview</div>
+                    <div class="tab" data-tab="html">Post HTML</div>
+                    <div class="tab" data-tab="json">JS Entry</div>
+                </div>
+
+                <div id="preview-content">
+                    <p style="text-align: center; color: #718096; margin-top: 2rem;">Fill the form to see a preview</p>
+                </div>
+
+                <div id="html-content" style="display: none;">
+                    <p style="font-size: 0.85rem; color: #4a5568; margin-bottom: 0.5rem;">Download this as the new file in the <code>blogs/</code> folder.</p>
+                    <div class="output-box">
+                        <button class="copy-btn" onclick="copyToClipboard('html-code')">Copy</button>
+                        <pre id="html-code">Code will appear here...</pre>
+                    </div>
+                </div>
+
+                <div id="json-content" style="display: none;">
+                    <p style="font-size: 0.85rem; color: #4a5568; margin-bottom: 0.5rem;">Download and replace the existing <code>blogs.js</code> file with this updated manifest.</p>
+                    <div class="output-box">
+                        <button class="copy-btn" onclick="copyToClipboard('json-code')">Copy</button>
+                        <pre id="json-code">Code will appear here...</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const tabs = document.querySelectorAll('.tab');
+        const generateBtn = document.getElementById('generateBtn');
+
+        // Tab Switching
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                document.getElementById('preview-content').style.display = 'none';
+                document.getElementById('html-content').style.display = 'none';
+                document.getElementById('json-content').style.display = 'none';
+                
+                document.getElementById(`${tab.dataset.tab}-content`).style.display = 'block';
+            });
+        });
+
+        generateBtn.addEventListener('click', () => {
+            const title = document.getElementById('title').value;
+            const category = document.getElementById('category').value;
+            const categoryLabel = document.getElementById('category').options[document.getElementById('category').selectedIndex].text;
+            const image = document.getElementById('image').value || 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=600&q=80';
+            const date = document.getElementById('date').value;
+            const readTime = document.getElementById('readTime').value;
+            const excerpt = document.getElementById('excerpt').value;
+            const content = document.getElementById('content').value;
+            const isFeatured = document.getElementById('featured').checked;
+
+            const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+            const filename = `${slug}.html`;
+
+            // 1. Render Preview
+            document.getElementById('preview-content').innerHTML = `
+                <div class="blog-card" style="margin: 0 auto; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                    <div class="blog-card-img-wrap">
+                        <img src="${image}" alt="${title}" class="blog-card-img" style="width:100%; height:200px; object-fit:cover;">
+                        <span class="blog-card-tag" style="background: ${getTagColor(category)};">${categoryLabel}</span>
+                    </div>
+                    <div class="blog-card-body" style="padding: 1.5rem;">
+                        <div class="blog-card-meta" style="font-size: 0.8rem; color: #718096; margin-bottom: 0.5rem;">
+                            <span>📅 ${date}</span> | <span>⏱ ${readTime}</span>
+                        </div>
+                        <h3 style="font-size: 1.2rem; margin-bottom: 0.75rem; color: #1a365d;">${title}</h3>
+                        <p style="font-size: 0.9rem; line-height: 1.5; color: #4a5568;">${excerpt}</p>
+                    </div>
+                </div>
+                <p style="text-align: center; margin-top: 1rem; color: #48bb78; font-weight: 600;">✓ Code Generated Successfully!</p>
+            `;
+
+            // 2. Generate JSON
+            const jsonEntry = {
+                id: slug,
+                title: title,
+                excerpt: excerpt,
+                category: category,
+                categoryLabel: categoryLabel,
+                date: date,
+                readTime: readTime,
+                image: image,
+                featured: isFeatured,
+                url: `blogs/${filename}`
+            };
+            document.getElementById('json-code').textContent = JSON.stringify(jsonEntry, null, 2) + ",";
+
+            // 3. Generate HTML
+            const htmlCode = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="../logo.svg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${title} | Blog | People Serve India LLP</title>
+    <meta name="description" content="${excerpt}">
+    <link rel="stylesheet" href="../style.css" />
+    <style>
+        .blog-post-content { max-width: 800px; margin: 0 auto; padding: 4rem 1.5rem; }
+        .blog-post-header { margin-bottom: 3rem; text-align: center; }
+        .blog-post-header h1 { font-size: 2.5rem; color: var(--color-brand-blue); margin-bottom: 1rem; line-height: 1.2; }
+        .blog-post-meta { color: var(--color-gray-500); font-size: 0.9rem; display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 2rem; }
+        .blog-post-image { width: 100%; height: 450px; object-fit: cover; border-radius: var(--radius-lg); margin-bottom: 3rem; box-shadow: var(--shadow-lg); }
+        .blog-post-body { font-size: 1.1rem; line-height: 1.8; color: var(--color-gray-900); }
+        .blog-post-body p { margin-bottom: 1.5rem; }
+        .blog-post-body h2 { font-size: 1.8rem; color: var(--color-brand-blue); margin: 2.5rem 0 1.25rem; }
+        .blog-cta { background: var(--color-gray-50); padding: 3rem; border-radius: var(--radius-lg); margin-top: 4rem; text-align: center; border: 1px solid var(--color-gray-200); }
+        .blog-cta h3 { margin-bottom: 1rem; color: var(--color-brand-blue); }
+        @media (max-width: 768px) { .blog-post-header h1 { font-size: 2rem; } .blog-post-image { height: 300px; } }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- Top Bar & Header (Same as other pages, with ../ paths) -->
+        <header id="header" class="header">
+            <nav class="container nav">
+                <a href="../index.html" class="logo">
+                    <img src="../logo.svg" alt="People Serve India LLP Logo" class="logo-img">
+                    <span class="logo-text">PEOPLE SERVE <span class="text-secondary">INDIA LLP</span></span>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../blog.html" class="active">Blog</a></li>
+                    <li><a href="../contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <article class="blog-post-content reveal">
+                <header class="blog-post-header">
+                    <span class="blog-card-tag" style="position:static; display:inline-block; margin-bottom:1rem; background: ${getTagColor(category)};">${categoryLabel}</span>
+                    <h1>${title}</h1>
+                    <div class="blog-post-meta">
+                        <span>📅 ${date}</span>
+                        <span>⏱ ${readTime}</span>
+                    </div>
+                </header>
+
+                <img src="${image}" alt="${title}" class="blog-post-image">
+
+                <div class="blog-post-body">
+                    ${content}
+
+                    <div class="blog-cta">
+                        <h3>Ready to Elevate Your Commercial Space?</h3>
+                        <p>Partner with People Serve India for expert facility management solutions.</p>
+                        <div style="margin-top: 2rem; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+                            <a href="../contact.html" class="btn btn-primary">Get Free Assessment</a>
+                            <a href="https://wa.me/919066664444" class="btn btn-secondary">Contact Us</a>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </main>
+
+        <footer class="footer">
+            <div class="container footer-bottom">
+                <p>© 2026 People Serve India LLP. All Rights Reserved.</p>
+            </div>
+        </footer>
+    </div>
+    <script src="../main.js" defer><\/script>
+</body>
+</html>`;
+            document.getElementById('html-code').textContent = htmlCode;
+        });
+
+        function getTagColor(category) {
+            const colors = {
+                'housekeeping': '#1a365d',
+                'manpower': '#3182ce',
+                'compliance': '#38a169',
+                'security': '#e53e3e',
+                'ifm': '#f6931d',
+                'default': '#3182ce'
+            };
+            return colors[category] || colors.default;
+        }
+
+        function copyToClipboard(elementId) {
+            const text = document.getElementById(elementId).textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Copied to clipboard!');
+            });
+        }
+    </script>
+    <script src="blogs.js"></script>
+    <script>
+        const cmsFields = {
+            title: document.getElementById('title'),
+            category: document.getElementById('category'),
+            image: document.getElementById('image'),
+            imageFile: document.getElementById('imageFile'),
+            date: document.getElementById('date'),
+            readTime: document.getElementById('readTime'),
+            excerpt: document.getElementById('excerpt'),
+            content: document.getElementById('content'),
+            featured: document.getElementById('featured'),
+            password: document.getElementById('cmsPassword')
+        };
+        const publishBtn = document.getElementById('publishBtn');
+        const downloadHtmlBtn = document.getElementById('downloadHtmlBtn');
+        const downloadManifestBtn = document.getElementById('downloadManifestBtn');
+        const downloadBackupBtn = document.getElementById('downloadBackupBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const statusBox = document.getElementById('cmsStatus');
+        const postList = document.getElementById('postList');
+        let uploadedImageDataUrl = '';
+        let generatedBlogDraft = null;
+
+        cmsFields.date.value = cmsFields.date.value || formatCmsDate(new Date());
+        renderPostManager();
+
+        cmsFields.imageFile.addEventListener('change', event => {
+            const [file] = event.target.files;
+            uploadedImageDataUrl = '';
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = () => {
+                uploadedImageDataUrl = reader.result;
+                cmsFields.image.value = '';
+                showCmsStatus('Image uploaded for this draft. Generate the blog to include it.');
+            };
+            reader.readAsDataURL(file);
+        });
+
+        generateBtn.addEventListener('click', () => {
+            const draft = buildBlogDraft();
+            if (!draft) return;
+
+            generatedBlogDraft = draft;
+            document.getElementById('json-code').textContent = draft.manifestCode;
+            document.getElementById('html-code').textContent = draft.htmlCode;
+            renderCmsPreview(draft);
+            publishBtn.disabled = false;
+            downloadHtmlBtn.disabled = false;
+            downloadManifestBtn.disabled = false;
+            downloadBackupBtn.disabled = false;
+            showCmsStatus(`Generated ${draft.filename}. Use Publish Directly on PHP hosting, or download the files for manual publishing.`);
+        });
+
+        publishBtn.addEventListener('click', async () => {
+            const draft = generatedBlogDraft || buildBlogDraft();
+            if (!draft) return;
+
+            const password = cmsFields.password.value;
+            if (!password) {
+                showCmsStatus('Enter the CMS password before publishing directly.', true);
+                return;
+            }
+
+            publishBtn.disabled = true;
+            showCmsStatus('Publishing blog to the server...');
+
+            const payload = new FormData();
+            payload.append('password', password);
+            payload.append('entry', JSON.stringify(draft.entry));
+            payload.append('html', draft.htmlCode);
+
+            try {
+                const response = await fetch('cms-save.php', {
+                    method: 'POST',
+                    body: payload
+                });
+                const result = await response.json();
+
+                if (!response.ok || !result.success) {
+                    throw new Error(result.message || 'Could not publish the blog.');
+                }
+
+                showCmsStatus(`Published successfully: ${result.url}`);
+                upsertLocalBlogEntry(draft.entry);
+                renderPostManager();
+            } catch (error) {
+                showCmsStatus(`${error.message} If you are opening this file locally, run it through PHP hosting first.`, true);
+            } finally {
+                publishBtn.disabled = false;
+            }
+        });
+
+        downloadHtmlBtn.addEventListener('click', () => {
+            if (generatedBlogDraft) {
+                downloadCmsFile(generatedBlogDraft.filename, generatedBlogDraft.htmlCode, 'text/html');
+            }
+        });
+
+        downloadManifestBtn.addEventListener('click', () => {
+            if (generatedBlogDraft) {
+                downloadCmsFile('blogs.js', generatedBlogDraft.manifestCode, 'text/javascript');
+            }
+        });
+
+        downloadBackupBtn.addEventListener('click', () => {
+            if (generatedBlogDraft) {
+                downloadCmsFile(
+                    `${generatedBlogDraft.slug}-cms-backup.json`,
+                    JSON.stringify(generatedBlogDraft.backup, null, 2),
+                    'application/json'
+                );
+            }
+        });
+
+        resetBtn.addEventListener('click', () => {
+            cmsFields.title.value = '';
+            cmsFields.image.value = '';
+            cmsFields.imageFile.value = '';
+            cmsFields.date.value = formatCmsDate(new Date());
+            cmsFields.readTime.value = '5 min read';
+            cmsFields.excerpt.value = '';
+            cmsFields.content.value = '';
+            cmsFields.featured.checked = false;
+            cmsFields.password.value = '';
+            uploadedImageDataUrl = '';
+            generatedBlogDraft = null;
+            publishBtn.disabled = true;
+            downloadHtmlBtn.disabled = true;
+            downloadManifestBtn.disabled = true;
+            downloadBackupBtn.disabled = true;
+            document.getElementById('preview-content').innerHTML = '<p style="text-align: center; color: #718096; margin-top: 2rem;">Fill the form to see a preview</p>';
+            document.getElementById('html-code').textContent = 'Code will appear here...';
+            document.getElementById('json-code').textContent = 'Code will appear here...';
+            showCmsStatus('Draft cleared.');
+        });
+
+        function buildBlogDraft() {
+            const title = cmsFields.title.value.trim();
+            const category = cmsFields.category.value;
+            const categoryLabel = cmsFields.category.options[cmsFields.category.selectedIndex].text;
+            const image = cmsFields.image.value.trim() || uploadedImageDataUrl || 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=900&q=80';
+            const date = cmsFields.date.value.trim() || formatCmsDate(new Date());
+            const readTime = cmsFields.readTime.value.trim() || '5 min read';
+            const excerpt = cmsFields.excerpt.value.trim();
+            const content = normalizeBlogContent(cmsFields.content.value);
+            const featured = cmsFields.featured.checked;
+            const slug = slugifyBlogTitle(title);
+
+            if (!title || !excerpt || !content) {
+                showCmsStatus('Please add a title, excerpt, and blog content before generating.', true);
+                return null;
+            }
+
+            if (!slug) {
+                showCmsStatus('Please use a title with letters or numbers so a blog filename can be created.', true);
+                return null;
+            }
+
+            const filename = `${slug}.html`;
+            const entry = {
+                id: slug,
+                title,
+                excerpt,
+                category,
+                categoryLabel,
+                date,
+                readTime,
+                image,
+                featured,
+                url: `blogs/${filename}`
+            };
+            const manifest = mergeBlogManifest(entry);
+            return {
+                slug,
+                filename,
+                entry,
+                htmlCode: createBlogPageHtml({ title, excerpt, category, categoryLabel, image, date, readTime, content }),
+                manifestCode: `window.blogData = ${JSON.stringify(manifest, null, 2)};\n`,
+                backup: {
+                    entry,
+                    content,
+                    generatedAt: new Date().toISOString()
+                }
+            };
+        }
+
+        function renderCmsPreview(draft) {
+            document.getElementById('preview-content').innerHTML = `
+                <div class="blog-card" style="margin: 0 auto; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                    <div class="blog-card-img-wrap">
+                        <img src="${escapeCmsAttr(draft.entry.image)}" alt="${escapeCmsAttr(draft.entry.title)}" class="blog-card-img" style="width:100%; height:200px; object-fit:cover;">
+                        <span class="blog-card-tag" style="background: ${getTagColor(draft.entry.category)};">${escapeCmsHtml(draft.entry.categoryLabel)}</span>
+                    </div>
+                    <div class="blog-card-body" style="padding: 1.5rem;">
+                        <div class="blog-card-meta" style="font-size: 0.8rem; color: #718096; margin-bottom: 0.5rem;">
+                            <span>${escapeCmsHtml(draft.entry.date)}</span> | <span>${escapeCmsHtml(draft.entry.readTime)}</span>
+                        </div>
+                        <h3 style="font-size: 1.2rem; margin-bottom: 0.75rem; color: #1a365d;">${escapeCmsHtml(draft.entry.title)}</h3>
+                        <p style="font-size: 0.9rem; line-height: 1.5; color: #4a5568;">${escapeCmsHtml(draft.entry.excerpt)}</p>
+                    </div>
+                </div>
+                <p style="text-align: center; margin-top: 1rem; color: #48bb78; font-weight: 600;">Code generated successfully.</p>
+            `;
+        }
+
+        function renderPostManager() {
+            const blogs = Array.isArray(window.blogData) ? window.blogData : [];
+            if (!blogs.length) {
+                postList.innerHTML = '<p style="color:#64748b;">No blogs found.</p>';
+                return;
+            }
+
+            postList.innerHTML = blogs.map(blog => `
+                <div class="post-row" data-blog-id="${escapeCmsAttr(blog.id)}">
+                    <div>
+                        <div class="post-row-title">${escapeCmsHtml(blog.title || blog.id)}</div>
+                        <div class="post-row-meta">${escapeCmsHtml(blog.date || '')} ${blog.featured ? '| Featured' : ''}</div>
+                    </div>
+                    <button class="btn-cms btn-danger delete-post-btn" type="button" data-blog-id="${escapeCmsAttr(blog.id)}">Delete</button>
+                </div>
+            `).join('');
+        }
+
+        postList.addEventListener('click', async event => {
+            const button = event.target.closest('.delete-post-btn');
+            if (!button) return;
+
+            const blogId = button.dataset.blogId;
+            const blog = (window.blogData || []).find(item => item.id === blogId);
+            const password = cmsFields.password.value;
+
+            if (!password) {
+                showCmsStatus('Enter the CMS password before deleting a blog.', true);
+                return;
+            }
+
+            const title = blog ? blog.title : blogId;
+            if (!confirm(`Delete "${title}" from the website? This removes the blog page and updates blogs.js.`)) {
+                return;
+            }
+
+            button.disabled = true;
+            showCmsStatus(`Deleting "${title}"...`);
+
+            const payload = new FormData();
+            payload.append('password', password);
+            payload.append('id', blogId);
+
+            try {
+                const response = await fetch('cms-delete.php', {
+                    method: 'POST',
+                    body: payload
+                });
+                const result = await response.json();
+
+                if (!response.ok || !result.success) {
+                    throw new Error(result.message || 'Could not delete the blog.');
+                }
+
+                window.blogData = (window.blogData || []).filter(item => item.id !== blogId);
+                renderPostManager();
+                showCmsStatus(`Deleted "${title}" successfully.`);
+            } catch (error) {
+                showCmsStatus(`${error.message} If you are opening this file locally, run it through PHP hosting first.`, true);
+                button.disabled = false;
+            }
+        });
+
+        function upsertLocalBlogEntry(entry) {
+            const blogs = Array.isArray(window.blogData) ? window.blogData : [];
+            const withoutCurrent = blogs
+                .filter(blog => blog.id !== entry.id)
+                .map(blog => entry.featured ? { ...blog, featured: false } : blog);
+            window.blogData = [entry, ...withoutCurrent];
+        }
+
+        function createBlogPageHtml({ title, excerpt, category, categoryLabel, image, date, readTime, content }) {
+            return `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="../logo.svg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${escapeCmsHtml(title)} | Blog | People Serve India LLP</title>
+    <meta name="description" content="${escapeCmsAttr(excerpt)}">
+    <link rel="stylesheet" href="../style.css" />
+    <style>
+        .blog-post-content { max-width: 800px; margin: 0 auto; padding: 4rem 1.5rem; }
+        .blog-post-header { margin-bottom: 3rem; text-align: center; }
+        .blog-post-header h1 { font-size: 2.5rem; color: var(--color-brand-blue); margin-bottom: 1rem; line-height: 1.2; }
+        .blog-post-meta { color: var(--color-gray-500); font-size: 0.9rem; display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 2rem; flex-wrap: wrap; }
+        .blog-post-image { width: 100%; height: 450px; object-fit: cover; border-radius: var(--radius-lg); margin-bottom: 3rem; box-shadow: var(--shadow-lg); }
+        .blog-post-body { font-size: 1.1rem; line-height: 1.8; color: var(--color-gray-900); }
+        .blog-post-body p { margin-bottom: 1.5rem; }
+        .blog-post-body h2 { font-size: 1.8rem; color: var(--color-brand-blue); margin: 2.5rem 0 1.25rem; }
+        .blog-cta { background: var(--color-gray-50); padding: 3rem; border-radius: var(--radius-lg); margin-top: 4rem; text-align: center; border: 1px solid var(--color-gray-200); }
+        .blog-cta h3 { margin-bottom: 1rem; color: var(--color-brand-blue); }
+        @media (max-width: 768px) { .blog-post-header h1 { font-size: 2rem; } .blog-post-image { height: 300px; } }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <header id="header" class="header">
+            <nav class="container nav">
+                <a href="../index.html" class="logo">
+                    <img src="../logo.svg" alt="People Serve India LLP Logo" class="logo-img">
+                    <span class="logo-text">PEOPLE SERVE <span class="text-secondary">INDIA LLP</span></span>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../blog.html" class="active">Blog</a></li>
+                    <li><a href="../contact.html">Contact</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <a href="../profile.pdf" target="_blank" rel="noopener" class="btn btn-secondary">Download Profile</a>
+                    <a href="../contact.html" class="btn btn-primary">Free Site Assessment</a>
+                </div>
+                <button class="mobile-menu-btn" aria-label="Toggle Menu"><span></span><span></span><span></span></button>
+            </nav>
+        </header>
+
+        <main>
+            <article class="blog-post-content reveal">
+                <header class="blog-post-header">
+                    <span class="blog-card-tag" style="position:static; display:inline-block; margin-bottom:1rem; background: ${getTagColor(category)};">${escapeCmsHtml(categoryLabel)}</span>
+                    <h1>${escapeCmsHtml(title)}</h1>
+                    <div class="blog-post-meta">
+                        <span>${escapeCmsHtml(date)}</span>
+                        <span>${escapeCmsHtml(readTime)}</span>
+                    </div>
+                </header>
+
+                <img src="${escapeCmsAttr(image)}" alt="${escapeCmsAttr(title)}" class="blog-post-image">
+
+                <div class="blog-post-body">
+                    ${content}
+
+                    <div class="blog-cta">
+                        <h3>Ready to Elevate Your Commercial Space?</h3>
+                        <p>Partner with People Serve India for expert facility management solutions.</p>
+                        <div style="margin-top: 2rem; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+                            <a href="../contact.html" class="btn btn-primary">Get Free Assessment</a>
+                            <a href="https://wa.me/919066664444" class="btn btn-secondary">Contact Us</a>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </main>
+
+        <footer class="footer">
+            <div class="container footer-bottom">
+                <p>&copy; 2026 People Serve India LLP. All Rights Reserved.</p>
+            </div>
+        </footer>
+    </div>
+    <script src="../main.js" defer><\/script>
+</body>
+</html>`;
+        }
+
+        function mergeBlogManifest(newEntry) {
+            const existing = Array.isArray(window.blogData) ? window.blogData : [];
+            const withoutCurrent = existing
+                .filter(blog => blog.id !== newEntry.id)
+                .map(blog => newEntry.featured ? { ...blog, featured: false } : blog);
+            return [newEntry, ...withoutCurrent];
+        }
+
+        function normalizeBlogContent(value) {
+            const trimmed = value.trim();
+            if (!trimmed) return '';
+            if (/<[a-z][\s\S]*>/i.test(trimmed)) return trimmed;
+            return trimmed
+                .split(/\n{2,}/)
+                .map(paragraph => `<p>${escapeCmsHtml(paragraph).replace(/\n/g, '<br>')}</p>`)
+                .join('\n\n');
+        }
+
+        function slugifyBlogTitle(value) {
+            return value
+                .toLowerCase()
+                .trim()
+                .replace(/&/g, ' and ')
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/(^-|-$)/g, '');
+        }
+
+        function formatCmsDate(date) {
+            return date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+
+        function downloadCmsFile(filename, contents, type) {
+            const blob = new Blob([contents], { type });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            URL.revokeObjectURL(url);
+        }
+
+        function showCmsStatus(message, isError = false) {
+            statusBox.textContent = message;
+            statusBox.style.display = 'block';
+            statusBox.style.background = isError ? '#fef2f2' : '#ecfdf5';
+            statusBox.style.color = isError ? '#991b1b' : '#065f46';
+        }
+
+        function escapeCmsHtml(value) {
+            return String(value)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function escapeCmsAttr(value) {
+            return escapeCmsHtml(value).replace(/`/g, '&#096;');
+        }
+    </script>
+</body>
+</html>

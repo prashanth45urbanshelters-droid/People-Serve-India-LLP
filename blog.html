@@ -90,26 +90,13 @@
             </section>
 
             <!-- Featured Post -->
-            <section class="section-padding reveal" style="background: var(--color-gray-50);">
+            <section id="featured-section" class="section-padding reveal" style="background: var(--color-gray-50); display: none;">
                 <div class="container">
                     <div class="text-center" style="margin-bottom: 2rem;">
                         <span class="section-subtitle">Featured Article</span>
                     </div>
-                    <div class="blog-hero-card">
-                        <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=900&q=80"
-                            alt="Modern office facility management" class="blog-hero-img">
-                        <div class="blog-hero-body">
-                            <span class="blog-card-tag"
-                                style="position:static; display:inline-block; margin-bottom:1rem; background: var(--color-brand-orange);">Integrated FM</span>
-                            <div class="blog-card-meta" style="margin-bottom:0.85rem;">
-                                <span>📅 May 6, 2026</span>
-                                <span>⏱ 5 min read</span>
-                            </div>
-                            <h2>The Role of FM in Modern Commercial Spaces</h2>
-                            <p>Modern commercial spaces are expected to do more than just look professional; they need to operate efficiently, remain safe, and support productivity every day. This is where facility management (FM) plays a vital role.</p>
-                            <a href="blogs/the-role-of-fm-in-modern-commercial-spaces.html" class="btn btn-primary" style="width: fit-content;">Read Full
-                                Article</a>
-                        </div>
+                    <div id="featured-post-container">
+                        <!-- Featured post will be injected here -->
                     </div>
                 </div>
             </section>
@@ -132,147 +119,8 @@
                         <button class="filter-btn" data-filter="ifm">Integrated FM</button>
                     </div>
 
-                    <div class="blog-grid">
-
-                        <!-- New Article: FM in Modern Spaces -->
-                        <div class="blog-card reveal" data-category="ifm">
-                            <div class="blog-card-img-wrap">
-                                <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=600&q=80"
-                                    alt="Modern commercial building" class="blog-card-img">
-                                <span class="blog-card-tag" style="background: var(--color-brand-orange);">Integrated FM</span>
-                            </div>
-                            <div class="blog-card-body">
-                                <div class="blog-card-meta">
-                                    <span>📅 May 6, 2026</span>
-                                    <span>⏱ 5 min read</span>
-                                </div>
-                                <h3>The Role of FM in Modern Commercial Spaces</h3>
-                                <p>From maintenance and security to workplace optimization, FM has become a key part of managing successful commercial environments.</p>
-                                <a href="blogs/the-role-of-fm-in-modern-commercial-spaces.html" class="btn-text">Read Article →</a>
-                            </div>
-                        </div>
-
-                        <!-- Article 1 -->
-                        <div class="blog-card reveal" data-category="housekeeping" id="article-1">
-                            <div class="blog-card-img-wrap">
-                                <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&q=80"
-                                    alt="Office housekeeping" class="blog-card-img">
-                                <span class="blog-card-tag">Housekeeping</span>
-                            </div>
-                            <div class="blog-card-body">
-                                <div class="blog-card-meta">
-                                    <span>📅 March 1, 2026</span>
-                                    <span>⏱ 4 min read</span>
-                                </div>
-                                <h3>5 Housekeeping SOPs Every Commercial Space Must Follow</h3>
-                                <p>From washroom sanitation schedules to deep-cleaning protocols, structured SOPs ensure
-                                    consistency, hygiene compliance, and a healthier environment.</p>
-                                <a href="#" class="btn-text">Read Article →</a>
-                            </div>
-                        </div>
-
-                        <!-- Article 2 -->
-                        <div class="blog-card reveal" data-category="manpower" style="transition-delay:0.1s">
-                            <div class="blog-card-img-wrap">
-                                <img src="https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=600&q=80"
-                                    alt="Manpower outsourcing" class="blog-card-img">
-                                <span class="blog-card-tag" style="background: var(--color-brand-blue);">Manpower</span>
-                            </div>
-                            <div class="blog-card-body">
-                                <div class="blog-card-meta">
-                                    <span>📅 Feb 20, 2026</span>
-                                    <span>⏱ 5 min read</span>
-                                </div>
-                                <h3>Why Outsourcing Manpower is Smarter Than In-House Hiring</h3>
-                                <p>Outsourcing facility manpower reduces overhead, ensures background verification, and
-                                    gives businesses access to a trained, uniformed workforce without the HR burden of
-                                    direct employment.</p>
-                                <a href="#" class="btn-text">Read Article →</a>
-                            </div>
-                        </div>
-
-                        <!-- Article 3 -->
-                        <div class="blog-card reveal" data-category="compliance" style="transition-delay:0.2s">
-                            <div class="blog-card-img-wrap">
-                                <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=600&q=80"
-                                    alt="Statutory compliance" class="blog-card-img">
-                                <span class="blog-card-tag"
-                                    style="background: var(--color-brand-green);">Compliance</span>
-                            </div>
-                            <div class="blog-card-body">
-                                <div class="blog-card-meta">
-                                    <span>📅 Feb 10, 2026</span>
-                                    <span>⏱ 6 min read</span>
-                                </div>
-                                <h3>PF, ESI &amp; Labour Laws: What Facility Managers Must Know in 2026</h3>
-                                <p>Statutory compliance is the backbone of every credible facility management contract.
-                                    From PF contributions to the Contract Labour Act, here's your updated 2026
-                                    compliance checklist.</p>
-                                <a href="#" class="btn-text">Read Article →</a>
-                            </div>
-                        </div>
-
-                        <!-- Article 4 -->
-                        <div class="blog-card reveal" data-category="security" style="transition-delay:0.05s">
-                            <div class="blog-card-img-wrap">
-                                <img src="https://images.unsplash.com/photo-1582139329536-e7284fece509?w=600&q=80"
-                                    alt="Security management" class="blog-card-img">
-                                <span class="blog-card-tag" style="background: var(--color-primary);">Security</span>
-                            </div>
-                            <div class="blog-card-body">
-                                <div class="blog-card-meta">
-                                    <span>📅 Jan 28, 2026</span>
-                                    <span>⏱ 5 min read</span>
-                                </div>
-                                <h3>Beyond Guarding: Why Modern Security is a Facility Management Strategy</h3>
-                                <p>Professional security isn't just about posting guards at the gate. In 2026,
-                                    integrated access control, CCTV coordination, and visitor management are essential
-                                    components of a proactive security strategy.</p>
-                                <a href="#" class="btn-text">Read Article →</a>
-                            </div>
-                        </div>
-
-                        <!-- Article 5 -->
-                        <div class="blog-card reveal" data-category="ifm" style="transition-delay:0.15s">
-                            <div class="blog-card-img-wrap">
-                                <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80"
-                                    alt="Integrated facility management" class="blog-card-img">
-                                <span class="blog-card-tag" style="background: var(--color-brand-orange);">Integrated
-                                    FM</span>
-                            </div>
-                            <div class="blog-card-body">
-                                <div class="blog-card-meta">
-                                    <span>📅 Jan 15, 2026</span>
-                                    <span>⏱ 7 min read</span>
-                                </div>
-                                <h3>The IFM Advantage: One Partner, One Invoice, Zero Facility Headaches</h3>
-                                <p>Integrated Facility Management consolidates housekeeping, security, technical, and
-                                    manpower under a single vendor, reducing coordination overhead and improving
-                                    accountability across the board.</p>
-                                <a href="#" class="btn-text">Read Article →</a>
-                            </div>
-                        </div>
-
-                        <!-- Article 6 -->
-                        <div class="blog-card reveal" data-category="housekeeping" style="transition-delay:0.25s">
-                            <div class="blog-card-img-wrap">
-                                <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=600&q=80"
-                                    alt="Green facility management" class="blog-card-img">
-                                <span class="blog-card-tag">Green FM</span>
-                            </div>
-                            <div class="blog-card-body">
-                                <div class="blog-card-meta">
-                                    <span>📅 Jan 5, 2026</span>
-                                    <span>⏱ 4 min read</span>
-                                </div>
-                                <h3>Green Cleaning: How Eco-Friendly Housekeeping Practices Boost Your LEED Ratings</h3>
-                                <p>Using bio-degradable cleaning agents, water-efficient equipment, and waste
-                                    segregation practices not only helps the environment — it also improves your
-                                    building's sustainability credentials and client appeal.</p>
-                                <a href="#" class="btn-text">Read Article →</a>
-                            </div>
-                        </div>
-
+                    <div id="blog-grid" class="blog-grid">
+                        <!-- Blog cards will be injected here -->
                     </div>
                 </div>
             </section>
@@ -400,25 +248,108 @@
     </div>
 
     <script src="main.js" defer></script>
+    <script src="blogs.js"></script>
 
-    <!-- Blog Category Filter Script -->
+    <!-- Blog Management Script -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            const blogGrid = document.getElementById('blog-grid');
+            const featuredSection = document.getElementById('featured-section');
+            const featuredContainer = document.getElementById('featured-post-container');
             const filterBtns = document.querySelectorAll('.filter-btn');
-            const blogCards = document.querySelectorAll('.blog-card[data-category]');
 
+            let allBlogs = window.blogData || [];
+
+            // Initial render
+            if (allBlogs.length > 0) {
+                renderBlogs('all');
+            } else {
+                blogGrid.innerHTML = '<p>No articles found.</p>';
+            }
+
+            function renderBlogs(filter) {
+                // Clear grid
+                blogGrid.innerHTML = '';
+                
+                // Handle Featured Post
+                const featured = allBlogs.find(b => b.featured);
+                if (featured) {
+                    featuredSection.style.display = 'block';
+                    featuredContainer.innerHTML = `
+                        <div class="blog-hero-card">
+                            <img src="${featured.image}" alt="${featured.title}" class="blog-hero-img">
+                            <div class="blog-hero-body">
+                                <span class="blog-card-tag" style="position:static; display:inline-block; margin-bottom:1rem; background: ${getTagColor(featured.category)};">${featured.categoryLabel}</span>
+                                <div class="blog-card-meta" style="margin-bottom:0.85rem;">
+                                    <span>📅 ${featured.date}</span>
+                                    <span>⏱ ${featured.readTime}</span>
+                                </div>
+                                <h2>${featured.title}</h2>
+                                <p>${featured.excerpt}</p>
+                                <a href="${featured.url}" class="btn btn-primary" style="width: fit-content;">Read Full Article</a>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    featuredSection.style.display = 'none';
+                }
+
+                // Filter and Render Grid
+                const filteredBlogs = filter === 'all' 
+                    ? allBlogs 
+                    : allBlogs.filter(b => b.category === filter);
+
+                if (filteredBlogs.length === 0) {
+                    blogGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: 3rem;">No articles found in this category.</p>';
+                    return;
+                }
+
+                filteredBlogs.forEach((blog, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'blog-card reveal';
+                    card.style.transitionDelay = `${(index % 3) * 0.1}s`;
+                    card.innerHTML = `
+                        <div class="blog-card-img-wrap">
+                            <img src="${blog.image}" alt="${blog.title}" class="blog-card-img">
+                            <span class="blog-card-tag" style="background: ${getTagColor(blog.category)};">${blog.categoryLabel}</span>
+                        </div>
+                        <div class="blog-card-body">
+                            <div class="blog-card-meta">
+                                <span>📅 ${blog.date}</span>
+                                <span>⏱ ${blog.readTime}</span>
+                            </div>
+                            <h3>${blog.title}</h3>
+                            <p>${blog.excerpt}</p>
+                            <a href="${blog.url}" class="btn-text">Read Article →</a>
+                        </div>
+                    `;
+                    blogGrid.appendChild(card);
+                });
+
+                // Trigger reveal animations
+                if (window.revealObserver) {
+                    document.querySelectorAll('.reveal').forEach(el => window.revealObserver.observe(el));
+                }
+            }
+
+            function getTagColor(category) {
+                const colors = {
+                    'housekeeping': 'var(--color-primary)',
+                    'manpower': 'var(--color-brand-blue)',
+                    'compliance': 'var(--color-brand-green)',
+                    'security': 'var(--color-primary)',
+                    'ifm': 'var(--color-brand-orange)',
+                    'default': 'var(--color-brand-blue)'
+                };
+                return colors[category] || colors.default;
+            }
+
+            // Filter Click Events
             filterBtns.forEach(btn => {
                 btn.addEventListener('click', function () {
                     filterBtns.forEach(b => b.classList.remove('active'));
                     this.classList.add('active');
-                    const filter = this.dataset.filter;
-                    blogCards.forEach(card => {
-                        if (filter === 'all' || card.dataset.category === filter) {
-                            card.style.display = 'flex';
-                        } else {
-                            card.style.display = 'none';
-                        }
-                    });
+                    renderBlogs(this.dataset.filter);
                 });
             });
         });

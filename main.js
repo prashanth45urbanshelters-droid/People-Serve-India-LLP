@@ -44,6 +44,9 @@ const revealObserver = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.1 });
 
+// Expose globally for dynamic content
+window.revealObserver = revealObserver;
+
 revealElements.forEach(el => revealObserver.observe(el));
 
 // ── Contact Form Submit ──
