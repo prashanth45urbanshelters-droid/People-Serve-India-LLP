@@ -552,8 +552,17 @@
             });
         }
     </script>
-    <script src="blogs.js"></script>
     <script>
+        // Load blogs.js dynamically with a cache-busting query parameter
+        const script = document.createElement('script');
+        script.src = 'blogs.js?v=' + Date.now();
+        script.onload = () => {
+            if (typeof renderPostManager === 'function') {
+                renderPostManager();
+            }
+        };
+        document.head.appendChild(script);
+
         const cmsFields = {
             title: document.getElementById('title'),
             category: document.getElementById('category'),
@@ -577,7 +586,7 @@
         let generatedBlogDraft = null;
 
         cmsFields.date.value = cmsFields.date.value || formatCmsDate(new Date());
-        renderPostManager();
+        // renderPostManager is called dynamically on script onload instead
 
         cmsFields.imageFile.addEventListener('change', event => {
             const [file] = event.target.files;

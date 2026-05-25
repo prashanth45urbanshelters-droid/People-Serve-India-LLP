@@ -248,24 +248,28 @@
     </div>
 
     <script src="main.js" defer></script>
-    <script src="blogs.js"></script>
+    <script src="main.js" defer></script>
 
     <!-- Blog Management Script -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const blogGrid = document.getElementById('blog-grid');
-            const featuredSection = document.getElementById('featured-section');
-            const featuredContainer = document.getElementById('featured-post-container');
-            const filterBtns = document.querySelectorAll('.filter-btn');
+            // Load blogs.js dynamically with a cache-busting query parameter
+            const script = document.createElement('script');
+            script.src = 'blogs.js?v=' + Date.now();
+            script.onload = function () {
+                const blogGrid = document.getElementById('blog-grid');
+                const featuredSection = document.getElementById('featured-section');
+                const featuredContainer = document.getElementById('featured-post-container');
+                const filterBtns = document.querySelectorAll('.filter-btn');
 
-            let allBlogs = window.blogData || [];
+                let allBlogs = window.blogData || [];
 
-            // Initial render
-            if (allBlogs.length > 0) {
-                renderBlogs('all');
-            } else {
-                blogGrid.innerHTML = '<p>No articles found.</p>';
-            }
+                // Initial render
+                if (allBlogs.length > 0) {
+                    renderBlogs('all');
+                } else {
+                    blogGrid.innerHTML = '<p>No articles found.</p>';
+                }
 
             function renderBlogs(filter) {
                 // Clear grid
@@ -352,6 +356,8 @@
                     renderBlogs(this.dataset.filter);
                 });
             });
+            };
+            document.head.appendChild(script);
         });
     </script>
 </body>
