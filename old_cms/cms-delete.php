@@ -92,4 +92,3 @@ function respond(bool $success, string $message, int $status = 200, array $extra
     ], $extra));
     exit;
 }
-
